@@ -1,7 +1,7 @@
 <template>
     <div>
         <img alt="Vue logo" src="./assets/logo.png" />
-        <el-button type="primary">主要按钮</el-button>
+        <!-- <el-button type="primary">主要按钮</el-button>
         <el-select v-model="value" placeholder="请选择">
             <el-option
                 v-for="item in options"
@@ -10,19 +10,24 @@
                 :value="item.value"
             >
             </el-option>
-        </el-select>
-        <!-- <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" /> -->
+        </el-select> -->
+        <HelloWorld :msg="value" :obj="obj" />
+        <el-button type="primary" @click="change()">app</el-button>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
-// import HelloWorld from '@/components/HelloWorld.vue'   aa
+import HelloWorld from '@/components/HelloWorld.vue'
 
 export default defineComponent({
     name: 'App',
     setup() {
-        const value = ref('')
+        const value = ref('Hello Vue 3 + TypeScript + Vite')
+        const obj = reactive({
+            aa: '666',
+            bb: [1]
+        })
         const options = reactive([
             {
                 label: '111',
@@ -41,14 +46,21 @@ export default defineComponent({
                 value: '4'
             }
         ])
+        const change = () => {
+            value.value += '23_'
+            obj.aa += 'aa_'
+            obj.bb = [1, 2]
+        }
         return {
             value,
-            options
+            options,
+            change,
+            obj
         }
+    },
+    components: {
+        HelloWorld
     }
-    // components: {
-    //     HelloWorld
-    // }
 })
 </script>
 

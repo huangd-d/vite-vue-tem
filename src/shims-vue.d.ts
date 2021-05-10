@@ -1,3 +1,5 @@
+declare module 'axios'
+declare module 'element-plus'
 declare module '*.vue' {
     import { DefineComponent } from 'vue'
 

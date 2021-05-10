@@ -1,41 +1,15 @@
 <template>
     <div>
-        <h1>{{ msg }}</h1>
-
-        <p>
-            Recommended IDE setup:
-            <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
-            +
-            <a
-                href="https://marketplace.visualstudio.com/items?itemName=octref.vetur"
-                target="_blank"
-            >
-                Vetur
-            </a>
-            or
-            <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-            (if using
-            <code>&lt;script setup&gt;</code>)
-        </p>
-
-        <p>See <code>README.md</code> for more information.</p>
-
-        <p>
-            <a href="https://vitejs.dev/guide/features.html" target="_blank"> Vite Docs </a>
-            |
-            <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
-        </p>
-
-        <button @click="count++">count is: {{ count }}</button>
-        <p>
-            Edit
-            <code>components/HelloWorld.vue</code> to test hot module replacement.
-        </p>
+        <h1>msg:{{ msg }}</h1>
+        <h1>msg1:{{ msg1 }}</h1>
+        <h1>msg2:{{ msg2 }}</h1>
+        <h1>msg3:{{ msg3 }}</h1>
+        <el-button type="primary" @click="count1()">主要按钮</el-button>
     </div>
 </template>
 
 <script lang="ts">
-import { ref, defineComponent } from 'vue'
+import { ref, defineComponent, computed } from 'vue'
 
 export default defineComponent({
     name: 'HelloWorld',
@@ -43,11 +17,25 @@ export default defineComponent({
         msg: {
             type: String,
             required: true
+        },
+        obj: {
+            type: Object
         }
     },
-    setup: () => {
+    emits: ['update:msg'],
+    setup: (_, { emit }) => {
         const count = ref(0)
-        return { count }
+        const msg1 = computed(() => `${_.msg}111`)
+        const msg2 = computed(() => `${_.obj?.aa}222`)
+        const msg3 = computed(() =>
+            _.obj?.bb.reduce((pre: number, el: number) => {
+                return pre + el
+            })
+        )
+        const count1 = () => {
+            emit('update:msg', '66666')
+        }
+        return { count, count1, msg1, msg2, msg3 }
     }
 })
 </script>
